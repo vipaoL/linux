@@ -15,11 +15,6 @@
 	model = "Samsung Galaxy S7 Edge (SM-G935F)";
 	compatible = "samsung,hero2lte", "samsung,exynos8890";
 	chassis-type = "handset";
-	model_info-chip = <0x22ba>;
-	model_info-platform = "android";
-	model_info-subtype = "samsung";
-	model_info-hw_rev = <0x08>;
-	model_info-hw_rev_end = <0x0a>;
 
 	aliases {
 		mmc0 = &mmc;
