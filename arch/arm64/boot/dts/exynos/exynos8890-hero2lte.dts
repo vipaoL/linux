@@ -33,10 +33,6 @@
 			height = <2560>;
 			stride = <(1440 * 4)>;
 			format = "a8r8g8b8";
-
-			/* these are required until there's a display driver */
-			vci-supply = <&max77838_ldo1>;
-			vdd3-supply = <&max77838_ldo3>;
 		};
 	};
 
