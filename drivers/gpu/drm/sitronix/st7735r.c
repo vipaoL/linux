@@ -138,6 +138,13 @@ static const struct drm_simple_display_pipe_funcs st7735r_pipe_funcs = {
 	DRM_MIPI_DBI_SIMPLE_DISPLAY_PIPE_FUNCS(st7735r_pipe_enable),
 };
 
+static const struct st7735r_cfg hd17005h14_cfg = {
+  .mode    = { DRM_SIMPLE_MODE(128, 160, 28, 35) },
+  .write_only  = true,
+  .left_offset  = 2,
+  .top_offset  = 1,
+};
+
 static const struct st7735r_cfg jd_t18003_t01_cfg = {
 	.mode		= { DRM_SIMPLE_MODE(128, 160, 28, 35) },
 	/* Cannot read from Adafruit 1.8" display via SPI */
@@ -168,6 +175,7 @@ static const struct drm_driver st7735r_driver = {
 static const struct of_device_id st7735r_of_match[] = {
 	{ .compatible = "jianda,jd-t18003-t01", .data = &jd_t18003_t01_cfg },
 	{ .compatible = "okaya,rh128128t", .data = &rh128128t_cfg },
+	{ .compatible = "hd,hd17005h14", .data = &hd17005h14_cfg },
 	{ },
 };
 MODULE_DEVICE_TABLE(of, st7735r_of_match);
@@ -175,6 +183,7 @@ MODULE_DEVICE_TABLE(of, st7735r_of_match);
 static const struct spi_device_id st7735r_id[] = {
 	{ "jd-t18003-t01", (uintptr_t)&jd_t18003_t01_cfg },
 	{ "rh128128t", (uintptr_t)&rh128128t_cfg },
+	{ "hd17005h14", (uintptr_t)&hd17005h14_cfg },
 	{ },
 };
 MODULE_DEVICE_TABLE(spi, st7735r_id);
