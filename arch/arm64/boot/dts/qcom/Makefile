@@ -61,6 +61,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-lg-c50.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-lg-m216.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8910.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mifi-m9s.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-motorola-harpia.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-motorola-osprey.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-motorola-surnia.dtb

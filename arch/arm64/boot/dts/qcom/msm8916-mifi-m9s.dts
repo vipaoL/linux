@@ -1,0 +1,304 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-pm8916.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/leds/common.h>
+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
+
+/ {
+	model = "MIFI M9S";
+	compatible = "mifi,m9s", "qcom,msm8916";
+	chassis-type = "embedded";
+
+	aliases {
+		mmc0 = &sdhc_1; /* eMMC */
+		mmc1 = &sdhc_2; /* SD card */
+		serial0 = &blsp_uart2;
+		spi0 = &blsp_spi5;
+	};
+
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pm8916_pwm 0 100000>;
+
+		brightness-levels = <0 255>;
+		num-interpolated-steps = <255>;
+		default-brightness-level = <255>;
+	};
+
+	battery: battery {
+		compatible = "simple-battery";
+		voltage-min-design-microvolt = <3700000>;
+		voltage-max-design-microvolt = <4200000>;
+		energy-full-design-microwatt-hours = <79550000>;
+		charge-full-design-microamp-hours = <2150000>;
+
+		ocv-capacity-celsius = <25>;
+		ocv-capacity-table-0 = <4150000 100>, <4120000 95>, <4085000 90>,
+			<4050000 85>, <4015000 80>, <3950000 75>, <3906000 70>,
+			<3864000 65>, <3826000 60>, <3809000 55>, <3798000 50>,
+			<3787000 45>, <3776000 40>, <3755000 35>, <3735000 30>,
+			<3715000 25>, <3680000 20>, <3620000 16>, <3583000 13>,
+			<3563000 11>, <3553000 10>, <3533000 9>, <3520000 8>,
+			<3490000 7>, <3460000 6>, <3440000 5>, <3410000 4>,
+			<3390000 3>, <3370000 2>, <3360000 1>, <3350000 0>;
+	};
+
+	chosen {
+		stdout-path = "serial0";
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+
+		pinctrl-0 = <&button_pins>;
+		pinctrl-names = "default";
+
+		label = "GPIO Buttons";
+
+		status = "okay";
+
+		button-restart {
+			gpios = <&tlmm 102 GPIO_ACTIVE_LOW>;
+			label = "Restart";
+			linux,code = <KEY_RESTART>;
+		};
+
+		button-wps {
+			gpios = <&tlmm 27 GPIO_ACTIVE_LOW>;
+			label = "WPS";
+			linux,code = <KEY_WPS_BUTTON>;
+		};
+
+		button-edl {
+			gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
+			label = "EDL Testpoint";
+			linux,code = <KEY_PROG1>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-0 = <&gpio_leds_default>;
+		pinctrl-names = "default";
+		status = "okay";
+
+		led_power_r {
+			label = "red:power";
+			gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_RED>;
+			function = LED_FUNCTION_POWER;
+			linux,default-trigger = "pm8916-lbc-chgr-online";
+		};
+
+		led_power_g {
+			label = "green:power";
+			gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_POWER;
+			linux,default-trigger = "pm8916-bms-vm-full";
+		};
+
+		led_4g_r {
+			label = "red:4g";
+			gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_RED>;
+			function = LED_FUNCTION_WAN;
+			default-state = "off";
+		};
+
+		led_4g_g {
+			label = "green:4g";
+			gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_WAN;
+			default-state = "off";
+		};
+
+		led_wifi_r {
+			label = "red:wifi";
+			gpios = <&tlmm 84 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_RED>;
+			function = LED_FUNCTION_WLAN;
+			linux,default-trigger = "phy0tx";
+		};
+
+		led_wifi_g {
+			label = "green:wifi";
+			gpios = <&tlmm 73 GPIO_ACTIVE_HIGH>;
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_WLAN;
+			default-state = "off";
+		};
+	};
+};
+
+&bam_dmux {
+	status = "okay";
+};
+
+&bam_dmux_dma {
+	status = "okay";
+};
+
+&blsp_i2c5 {
+	status = "disabled";
+	clock-frequency = <400000>;
+	ssd1306: oled@3c {
+		compatible = "solomon,ssd1306";
+		reg = <0x3c>;
+		solomon,width = <128>;
+		solomon,height = <64>;
+		solomon,page-offset = <0>;
+		solomon,com-invdir;
+		status = "disabled";
+	};
+};
+
+&blsp_spi5 {
+	cs-gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+	display@0 {
+		compatible = "galaxycore,gc9107";
+		reg = <0>;
+		spi-max-frequency = <32000000>;
+		dc-gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
+		rotation = <0>;
+
+		backlight = <&backlight>;
+
+		pinctrl-0 = <&lcd_default>;
+		pinctrl-names = "default";
+
+		status = "okay";
+	};
+};
+
+&blsp_uart2 {
+	status = "okay";
+};
+
+/* Remove &mdss_dsi0_phy from clocks to make sure that gcc probes with display disabled */
+&gcc {
+	clocks = <&xo_board>, <&sleep_clk>, <0>, <0>, <0>, <0>, <0>;
+};
+
+&mba_mem {
+	status = "okay";
+};
+
+&mpss {
+	status = "okay";
+};
+
+&mpss_mem {
+	reg = <0x0 0x86800000 0x0 0x5500000>;
+	status = "okay";
+};
+
+&pm8916_bms {
+	monitored-battery = <&battery>;
+	power-supplies = <&pm8916_charger>;
+	status = "okay";
+};
+
+&pm8916_charger {
+	qcom,fast-charge-safe-current = <600000>;
+	qcom,fast-charge-safe-voltage = <4200000>;
+
+	monitored-battery = <&battery>;
+
+	status = "okay";
+};
+
+&pm8916_mpps {
+	pwm_out: mpp4-state {
+		pins = "mpp4";
+		function = "digital";
+		power-source = <PM8916_MPP_VPH>;
+		output-high;
+		qcom,dtest = <1>;
+	};
+};
+
+&pm8916_pwm {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pwm_out>;
+};
+
+&sdhc_1 {
+	status = "okay";
+};
+
+&sdhc_2 {
+	non-removable;
+
+	status = "okay";
+};
+
+&usb {
+	extcon = <&pm8916_charger>;
+	dr_mode = "peripheral";
+	status = "okay";
+};
+
+&usb_hs_phy {
+	extcon = <&pm8916_charger>;
+};
+
+&venus {
+	status = "okay";
+};
+
+&venus_mem {
+	status = "okay";
+};
+
+&wcnss {
+	status = "okay";
+};
+
+&wcnss_iris {
+	compatible = "qcom,wcn3620";
+};
+
+&wcnss_mem {
+	status = "okay";
+};
+
+&tlmm {
+	button_pins: button-pins-state {
+		pins = "gpio27", "gpio102";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+
+	button_edl_pin: button-edl-state {
+		pins = "gpio37";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-down;
+	};
+
+	gpio_leds_default: gpio-leds-default-state {
+		pins = "gpio0", "gpio1", "gpio72", "gpio73", "gpio84", "gpio85";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	lcd_default: display-pins-default-state {
+		pins = "gpio11", "gpio30";
+		function = "gpio";
+
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+};
