@@ -853,6 +853,8 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
 	}
 
 	num_lm = dpu_crtc_get_num_lm(crtc_state);
+	if (!num_lm)
+		num_lm = 1;
 
 	/* state->src is 16.16, src_rect is not */
 	drm_rect_fp_to_int(&init_pipe_cfg.src_rect, &new_plane_state->src);
@@ -904,28 +906,31 @@ static int dpu_plane_atomic_check_nosspp(struct drm_plane *plane,
 			};
 		int cfg_idx = stage_id * PIPES_PER_STAGE;
 
+		struct drm_rect src = new_plane_state->src;
+		struct drm_rect dst = new_plane_state->dst;
+
 		pipe_cfg = &pstate->pipe_cfg[cfg_idx];
 		r_pipe_cfg = &pstate->pipe_cfg[cfg_idx + 1];
 
-		drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
-		pipe_cfg->dst_rect = new_plane_state->dst;
-
 		DPU_DEBUG_PLANE(pdpu, "checking src " DRM_RECT_FMT
 				" vs clip window " DRM_RECT_FMT "\n",
-				DRM_RECT_ARG(&pipe_cfg->src_rect),
+				DRM_RECT_ARG(&new_plane_state->src),
 				DRM_RECT_ARG(&mixer_rect));
 
 		/*
 		 * If this plane does not fall into mixer rect, check next
 		 * mixer rect.
 		 */
-		if (!drm_rect_clip_scaled(&pipe_cfg->src_rect,
-					  &pipe_cfg->dst_rect,
+		if (!drm_rect_clip_scaled(&src,
+					  &dst,
 					  &mixer_rect)) {
 			memset(pipe_cfg, 0, 2 * sizeof(struct dpu_sw_pipe_cfg));
 
 			continue;
 		}
+
+		drm_rect_fp_to_int(&pipe_cfg->src_rect, &src);
+		pipe_cfg->dst_rect = dst;
 
 		pipe_cfg->dst_rect.x1 -= mixer_rect.x1;
 		pipe_cfg->dst_rect.x2 -= mixer_rect.x1;
