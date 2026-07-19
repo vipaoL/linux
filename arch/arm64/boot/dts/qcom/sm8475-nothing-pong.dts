@@ -143,6 +143,18 @@
 		};
 	};
 
+	vddic_1v8: vddic-1v8-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "vddic_1v8";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		gpio = <&tlmm 62 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
 	vph_pwr: vph-pwr-regulator {
 		compatible = "regulator-fixed";
 		regulator-name = "vph_pwr";
@@ -692,6 +704,7 @@
 
 		vdd-supply = <&vreg_l13c_3p0>;
 		vddio-supply = <&vreg_l12c_1p8>;
+		vddic-supply = <&vddic_1v8>;
 
 		pinctrl-0 = <&lcd_reset_n_active>,
 			    <&mdp_vsync_p_active>;
