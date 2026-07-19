@@ -1030,3 +1030,9 @@
 
 	status = "okay";
 };
+
+&vamacro {
+	qcom,dmic-sample-rate = <600000>;
+
+	status = "okay";
+};
