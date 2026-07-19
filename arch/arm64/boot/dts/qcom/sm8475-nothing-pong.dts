@@ -849,7 +849,7 @@
 		reg = <0>;
 
 		interrupt-parent = <&tlmm>;
-		interrupts = <21 0x2008>;
+		interrupts = <21 IRQ_TYPE_EDGE_FALLING>;
 
 		reset-gpios = <&tlmm 20 GPIO_ACTIVE_LOW>;
 
