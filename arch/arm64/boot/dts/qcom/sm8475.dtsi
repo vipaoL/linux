@@ -217,8 +217,8 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&pcie0_default_state>;
 
-		perst-gpio = <&tlmm 94 GPIO_ACTIVE_HIGH>;
-		wake-gpio = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+		perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+		wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
 
 		qcom,bw-scale = /* Gen1 */
 				<RPMH_REGULATOR_LEVEL_LOW_SVS
