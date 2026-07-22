@@ -636,7 +636,219 @@
 	};
 
 	/* redriver@1c onnn,redriver */
-	/* aw20036_led@3a awinic,aw20036_led */
+
+	aw20036: led-controller@3a {
+		compatible = "awinic,aw20036";
+		reg = <0x3a>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		enable-gpios = <&tlmm 44 GPIO_ACTIVE_HIGH>;
+
+		led@0 {
+			reg = <0x00>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "camera-bottom-right";
+		};
+
+		led@2 {
+			reg = <0x02>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-1";
+		};
+
+		led@3 {
+			reg = <0x03>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-2";
+		};
+
+		led@4 {
+			reg = <0x04>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-3";
+		};
+
+		led@5 {
+			reg = <0x05>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-4";
+		};
+
+		led@6 {
+			reg = <0x06>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-5";
+		};
+
+		led@7 {
+			reg = <0x07>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-6";
+		};
+
+		led@8 {
+			reg = <0x08>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-7";
+		};
+
+		led@9 {
+			reg = <0x09>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-1";
+		};
+
+		led@10 {
+			reg = <0x0a>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-4";
+		};
+
+		led@11 {
+			reg = <0x0b>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-7";
+		};
+
+		led@12 {
+			reg = <0x0c>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "camera-top-left";
+		};
+
+		led@13 {
+			reg = <0x0d>;
+			color = <LED_COLOR_ID_RED>;
+			label = "red-indicator";
+		};
+
+		led@14 {
+			reg = <0x0e>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-8";
+		};
+
+		led@15 {
+			reg = <0x0f>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-9";
+		};
+
+		led@16 {
+			reg = <0x10>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-10";
+		};
+
+		led@17 {
+			reg = <0x11>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-11";
+		};
+
+		led@18 {
+			reg = <0x12>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-12";
+		};
+
+		led@19 {
+			reg = <0x13>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-13";
+		};
+
+		led@20 {
+			reg = <0x14>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-14";
+		};
+
+		led@21 {
+			reg = <0x15>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-2";
+		};
+
+		led@22 {
+			reg = <0x16>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-5";
+		};
+
+		led@23 {
+			reg = <0x17>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-8";
+		};
+
+		led@24 {
+			reg = <0x18>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "notification";
+		};
+
+		led@26 {
+			reg = <0x1a>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-15";
+		};
+
+		led@27 {
+			reg = <0x1b>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-16";
+		};
+
+		led@28 {
+			reg = <0x1c>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-17";
+		};
+
+		led@29 {
+			reg = <0x1d>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-18";
+		};
+
+		led@30 {
+			reg = <0x1e>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-19";
+		};
+
+		led@31 {
+			reg = <0x1f>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-20";
+		};
+
+		led@32 {
+			reg = <0x20>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "ring-21";
+		};
+
+		led@33 {
+			reg = <0x21>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-3";
+		};
+
+		led@34 {
+			reg = <0x22>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-6";
+		};
+
+		led@35 {
+			reg = <0x23>;
+			color = <LED_COLOR_ID_WHITE>;
+			label = "charging-9";
+		};
+	};
 
 	nxp_eusb2_repeater: repeater@4f {
 		compatible = "nxp,eusb2-repeater";
