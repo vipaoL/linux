@@ -373,7 +373,7 @@
 
 		vreg_s1c_1p88: smps1 {
 			regulator-name = "vreg_s1c_1p88";
-			regulator-min-microvolt = <1900000>;
+			regulator-min-microvolt = <1880000>;
 			regulator-max-microvolt = <2024000>;
 			regulator-always-on;
 		};
@@ -542,12 +542,11 @@
 		};
 
 		vreg_s3e_2p2: smps3 {
-                        regulator-name = "vreg_s3e_2p2";
-                        regulator-min-microvolt = <2192000>;
-                        regulator-max-microvolt = <2208000>;
-                        regulator-always-on;
-                        regulator-boot-on;
-                };
+			regulator-name = "vreg_s3e_2p2";
+			regulator-min-microvolt = <2192000>;
+			regulator-max-microvolt = <2208000>;
+			regulator-always-on;
+		};
 
 		vreg_l1e_0p8: ldo1 {
 			regulator-name = "vreg_l1e_0p8";
@@ -573,8 +572,8 @@
 			regulator-max-microvolt = <1776000>;
 		};
 
-		vreg_l3e_0p88: ldo5 {
-			regulator-name = "vreg_l3e_0p88";
+		vreg_l5e_0p88: ldo5 {
+			regulator-name = "vreg_l5e_0p88";
 			regulator-min-microvolt = <880000>;
 			regulator-max-microvolt = <920000>;
 		};
@@ -585,11 +584,12 @@
 			regulator-max-microvolt = <1200000>;
 		};
 
-		vreg_l6e_2p8: ldo7 {
-			regulator-name = "vreg_l6e_2p8";
-			regulator-min-microvolt = <2800000>;
+		vreg_l7e_2p8: ldo7 {
+			regulator-name = "vreg_l7e_2p8";
+			regulator-min-microvolt = <2700000>;
 			regulator-max-microvolt = <2800000>;
 			regulator-always-on;
+                        regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
 		};
 	};
 };
