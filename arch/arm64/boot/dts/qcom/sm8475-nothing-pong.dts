@@ -133,7 +133,7 @@
 			no-map;
 		};
 
-		rmtfs_mem: memory@fc700000 {
+		rmtfs_mem: memory@f3300000 {
 			compatible = "qcom,rmtfs-mem";
 			reg = <0x0 0xf3300000 0x0 0x280000>;
 			no-map;
