@@ -177,9 +177,6 @@
 	wcn6855-pmu {
 		compatible = "qcom,wcn6855-pmu";
 
-		pinctrl-0 = <&hst_wlan_en>;
-		pinctrl-names = "default";
-
 		wlan-enable-gpios = <&tlmm 80 GPIO_ACTIVE_HIGH>;
 		bt-enable-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
 		swctrl-gpios = <&tlmm 82 GPIO_ACTIVE_HIGH>;
@@ -887,9 +884,7 @@
 		enable-gpios = <&tlmm 34 GPIO_ACTIVE_HIGH>;
 		firmware-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
 
-		pinctrl-0 = <&nfc_en>,
-			    <&nfc_clk_req>,
-			    <&nfc_dwl_req>,
+		pinctrl-0 = <&nfc_clk_req>,
 			    <&nfc_int_req>;
 		pinctrl-names = "default";
 	};
@@ -941,10 +936,8 @@
 		vddio-supply = <&vreg_l12c_1p8>;
 		vddic-supply = <&vddic_1v8>;
 
-		pinctrl-0 = <&lcd_reset_n_active>,
-			    <&mdp_vsync_p_active>;
-		pinctrl-1 = <&lcd_reset_n_suspend>,
-			    <&mdp_vsync_p_suspend>;
+		pinctrl-0 = <&mdp_vsync_p_active>;
+		pinctrl-1 = <&mdp_vsync_p_suspend>;
 		pinctrl-names = "default", "sleep";
 
 		port {
@@ -1112,28 +1105,13 @@
 		touchscreen-size-y = <2412>;
 
 		pinctrl-names = "default";
-		pinctrl-0 = <&ts_int_n>,
-			    <&ts_reset_n>;
+		pinctrl-0 = <&ts_int_n>;
 	};
 };
 
 &tlmm {
 	/* Reserved I/Os for FP */
 	gpio-reserved-ranges = <28 4>;
-
-	lcd_reset_n_active: lcd-reset-n-active-state {
-		pins = "gpio0";
-		function = "gpio";
-		drive-strength = <8>;
-		bias-disable;
-	};
-
-	lcd_reset_n_suspend: lcd-reset-n-suspend-state {
-		pins = "gpio0";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-pull-down;
-	};
 
 	ts_reset_n: ts-reset-n-state {
 		pins = "gpio20";
@@ -1149,22 +1127,8 @@
 		bias-pull-up;
 	};
 
-	nfc_en: nfc-en-state {
-		pins = "gpio34";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-disable;
-	};
-
 	nfc_clk_req: nfc-clk-req-state {
 		pins = "gpio35";
-		function = "gpio";
-		drive-strength = <2>;
-		bias-disable;
-	};
-
-	nfc_dwl_req: nfc-dwl-req-state {
-		pins = "gpio45";
 		function = "gpio";
 		drive-strength = <2>;
 		bias-disable;
@@ -1175,14 +1139,6 @@
 		function = "gpio";
 		drive-strength = <2>;
 		bias-pull-down;
-	};
-
-	hst_wlan_en: hst-wlan-en-state {
-		pins = "gpio80";
-		function = "gpio";
-		drive-strength = <10>;
-		bias-pull-up;
-		output-high;
 	};
 
 	mdp_vsync_p_active: mdp-vsync-p-active-state {
@@ -1244,15 +1200,14 @@
 &usb_1 {
 	/* USB 2.0 only */
 	qcom,select-utmi-as-pipe-clk;
-	status = "okay";
-};
 
-&usb_1_dwc3 {
 	dr_mode = "otg";
 	maximum-speed = "high-speed";
 	/* Remove USB3 phy */
 	phys = <&usb_1_hsphy>;
 	phy-names = "usb2-phy";
+
+	status = "okay";
 };
 
 &usb_1_dwc3_hs {

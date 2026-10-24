@@ -3925,13 +3925,6 @@
 			};
 
 			pcie0_default_state: pcie0-default-state {
-				perst-pins {
-					pins = "gpio94";
-					function = "gpio";
-					drive-strength = <2>;
-					bias-pull-down;
-				};
-
 				clkreq-pins {
 					pins = "gpio95";
 					function = "pcie0_clkreqn";
@@ -3948,13 +3941,6 @@
 			};
 
 			pcie1_default_state: pcie1-default-state {
-				perst-pins {
-					pins = "gpio97";
-					function = "gpio";
-					drive-strength = <2>;
-					bias-pull-down;
-				};
-
 				clkreq-pins {
 					pins = "gpio98";
 					function = "pcie1_clkreqn";

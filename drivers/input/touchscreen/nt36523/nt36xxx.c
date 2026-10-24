@@ -24,7 +24,6 @@
 #include <linux/proc_fs.h>
 #include <linux/input/mt.h>
 #include <linux/debugfs.h>
-#include <linux/of_gpio.h>
 #include <linux/of_irq.h>
 
 

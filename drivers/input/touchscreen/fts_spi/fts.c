@@ -49,7 +49,6 @@
 #endif
 
 #include <linux/gpio.h>
-#include <linux/of_gpio.h>
 #include <linux/pinctrl/consumer.h>
 #include <linux/regulator/consumer.h>
 
